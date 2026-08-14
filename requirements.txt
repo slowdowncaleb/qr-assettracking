@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+arcgis
+python-dotenv
+apscheduler
+
