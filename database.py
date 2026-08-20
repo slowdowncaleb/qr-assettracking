@@ -45,7 +45,17 @@ def get_all_locations():
     conn.close()
     return [{"asset_id": row["asset_id"], "lat": row["lat"], "lng": row["lng"], "last_updated": row["last_updated"]} for row in rows]
 
-# We actually don't clear the sqlite DB itself because we want the "last known location" 
-# to persist across days in the local cache, right?
-# If the user wants to wipe the ArcGIS 5-min layer, we don't necessarily wipe the SQLite cache.
-# The SQLite cache just holds the "latest state" to upload to the layers.
+def clear_and_set_all_locations(locations: list):
+    """Wipes the cache and populates it with a list of initial asset locations."""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM asset_locations')
+    now = datetime.datetime.now(datetime.timezone.utc)
+    for loc in locations:
+        asset_id = loc.get("AssetID") if "AssetID" in loc else loc.get("asset_id")
+        cursor.execute('''
+            INSERT INTO asset_locations (asset_id, lat, lng, last_updated)
+            VALUES (?, ?, ?, ?)
+        ''', (str(asset_id), float(loc["lat"]), float(loc["lng"]), now))
+    conn.commit()
+    conn.close()

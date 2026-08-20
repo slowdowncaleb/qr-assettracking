@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Asset Tracking — Demo Control Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/demo-static/demo.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-badge">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+        </div>
+        <div>
+          <h1 class="header-title">QR Asset Tracking Demo Controller</h1>
+          <p class="header-subtitle">Live Demonstration & Layer Orchestration Dashboard</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="/scan?id=0" target="_blank" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          Open QR Scanner Page
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="dashboard-grid">
+      <!-- Quick Demo Controls Card -->
+      <section class="card controls-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="icon-indicator">⚡</span>
+            <h2>Presentation Simulation Controls</h2>
+          </div>
+          <span class="badge badge-info">1-Click Live Triggers</span>
+        </div>
+        <p class="card-desc">Use these controls during your demo to wipe layers, seed datasets, or simulate background tasks on demand.</p>
+
+        <div class="action-buttons-grid">
+          <!-- Button 1: Reset / Wipe All -->
+          <div class="action-box">
+            <div class="action-info">
+              <h3>1. Reset / Wipe All Layers</h3>
+              <p>Completely empties Layer 0 (Live), Layer 1 (5-Min), Layer 2 (Daily), and clears local SQLite cache.</p>
+            </div>
+            <button id="btn-wipe" class="btn btn-danger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Wipe / Empty Layers</span>
+            </button>
+          </div>
+
+          <!-- Button 2: Reseed Demo Data -->
+          <div class="action-box">
+            <div class="action-info">
+              <h3>2. Reseed Demo Data</h3>
+              <p>Populates 10 live assets across US cities, 288 points on ASU campus for today (5-min), and 30 days of nationwide journeys.</p>
+            </div>
+            <button id="btn-seed" class="btn btn-success">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v8"></path>
+                <path d="m4.93 10.93 1.41 1.41"></path>
+                <path d="M2 18h2"></path>
+                <path d="M20 18h2"></path>
+                <path d="m19.07 10.93-1.41 1.41"></path>
+                <path d="M22 22H2"></path>
+                <path d="m8 22 4-10 4 10"></path>
+              </svg>
+              <span>Reseed Demo Data</span>
+            </button>
+          </div>
+
+          <!-- Button 3: 5-Min Upload -->
+          <div class="action-box">
+            <div class="action-info">
+              <h3>3. Simulate 5-Minute Upload</h3>
+              <p>Immediately snapshots latest asset locations from SQLite cache and appends them with current timestamp to <strong>Short-Term Layer (1)</strong>.</p>
+            </div>
+            <button id="btn-trigger-5min" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Trigger 5-Min Upload</span>
+            </button>
+          </div>
+
+          <!-- Button 4: Midnight Rollover -->
+          <div class="action-box">
+            <div class="action-info">
+              <h3>4. Simulate Midnight Rollover</h3>
+              <p>Archives latest positions to <strong>Long-Term Daily Layer (2)</strong> and wipes <strong>Short-Term Layer (1)</strong> ready for a fresh 24-hour cycle.</p>
+            </div>
+            <button id="btn-trigger-midnight" class="btn btn-midnight">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+              <span>Trigger Midnight Rollover</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Live Activity Log Console Card -->
+      <section class="card log-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="icon-indicator">📋</span>
+            <h2>Activity & Execution Log</h2>
+          </div>
+          <button id="btn-clear-logs" class="btn btn-sm btn-ghost">Clear Log</button>
+        </div>
+        <div id="log-console" class="log-console">
+          <div class="log-entry system">
+            <span class="log-time">[Ready]</span>
+            <span class="log-text">Demo controller loaded. Waiting for trigger actions...</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+  </div>
+
+  <script src="/demo-static/demo.js"></script>
+</body>
+</html>
